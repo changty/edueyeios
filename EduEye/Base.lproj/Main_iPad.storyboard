@@ -16,35 +16,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6l6-tA-gXc">
-                                <rect key="frame" x="331" y="497" width="106" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6l6-tA-gXc">
+                                <rect key="frame" x="258" y="448" width="253" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Read QR-Code">
+                                <state key="normal" image="qr_ico">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="scanQRCode" destination="BYZ-38-t0r" eventType="touchUpInside" id="mjb-p1-voZ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scan QR-code to connect to PC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UuX-hH-fms">
-                                <rect key="frame" x="20" y="437" width="728" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Scan QR-code to connect to PC" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UuX-hH-fms">
+                                <rect key="frame" x="20" y="386" width="728" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG2-Z3-BD2">
-                                <rect key="frame" x="367" y="904" width="35" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VG2-Z3-BD2">
+                                <rect key="frame" x="373" y="912" width="22" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="exitQRCode" destination="BYZ-38-t0r" eventType="touchUpInside" id="Szb-dD-aUp"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.12887525054684212" green="0.19761973159178542" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="VG2-Z3-BD2" secondAttribute="bottom" constant="90" id="250-bo-I6n"/>
+                            <constraint firstItem="UuX-hH-fms" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="3um-lH-757"/>
+                            <constraint firstAttribute="trailing" secondItem="UuX-hH-fms" secondAttribute="trailing" constant="20" symbolic="YES" id="CJJ-ve-dLL"/>
+                            <constraint firstItem="UuX-hH-fms" firstAttribute="centerX" secondItem="6l6-tA-gXc" secondAttribute="centerX" id="Fth-BR-Dv0"/>
+                            <constraint firstItem="6l6-tA-gXc" firstAttribute="top" secondItem="UuX-hH-fms" secondAttribute="bottom" constant="41" id="pPe-DT-bGc"/>
+                            <constraint firstItem="VG2-Z3-BD2" firstAttribute="centerX" secondItem="6l6-tA-gXc" secondAttribute="centerX" id="ti6-Oa-SO3"/>
+                            <constraint firstItem="6l6-tA-gXc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="zMN-fg-onn"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="exitScan" destination="VG2-Z3-BD2" id="lA5-Eb-FhG"/>
@@ -56,6 +68,9 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="qr_ico" width="128" height="128"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

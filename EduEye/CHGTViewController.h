@@ -24,7 +24,9 @@
 @property (strong, nonatomic) RoutingHTTPServer *httpServer;
 
 @property (weak, nonatomic) IBOutlet UILabel *textField1;
+
 @property (weak, nonatomic) IBOutlet UIButton *readQRBtn;
+
 @property (weak, nonatomic) IBOutlet UIButton *exitScan;
 
 //QR-Code scanning

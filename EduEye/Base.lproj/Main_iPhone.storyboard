@@ -16,40 +16,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7C-jS-WOj">
-                                <rect key="frame" x="107" y="269" width="106" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7C-jS-WOj">
+                                <rect key="frame" x="34" y="220" width="253" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Read QR-Code">
+                                <state key="normal" image="qr_ico">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="scanQRCode" destination="vXZ-lx-hvc" eventType="touchUpInside" id="WkL-E3-ZD8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scan QR-code to connect to PC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFt-QM-uhj">
-                                <rect key="frame" x="20" y="233" width="280" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Scan QR-code to connect to PC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFt-QM-uhj">
+                                <rect key="frame" x="20" y="184" width="281" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUh-6b-7Mh">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUh-6b-7Mh">
                                 <rect key="frame" x="137" y="478" width="35" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="exitQRCode" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yTa-dR-TYQ"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.12887525050000001" green="0.19761973159999999" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cUh-6b-7Mh" secondAttribute="bottom" constant="60" id="0js-OV-X7D"/>
+                            <constraint firstItem="s7C-jS-WOj" firstAttribute="top" secondItem="aFt-QM-uhj" secondAttribute="bottom" constant="15" id="46s-SA-wUd"/>
+                            <constraint firstItem="cUh-6b-7Mh" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="137" id="ZiM-zL-Qgq"/>
+                            <constraint firstItem="s7C-jS-WOj" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="ar3-zO-DR6"/>
+                            <constraint firstItem="aFt-QM-uhj" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="i9E-3B-zvj"/>
+                            <constraint firstItem="s7C-jS-WOj" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="phb-Gx-c7v"/>
+                            <constraint firstItem="aFt-QM-uhj" firstAttribute="centerX" secondItem="s7C-jS-WOj" secondAttribute="centerX" id="zTj-bd-5ab"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="exitScan" destination="cUh-6b-7Mh" id="YrD-nV-dtO"/>
-                        <outlet property="readQBtn" destination="s7C-jS-WOj" id="TXt-Qt-N3Q"/>
-                        <outlet property="readQRBtn" destination="s7C-jS-WOj" id="kaM-oL-tBj"/>
+                        <outlet property="readQRBtn" destination="s7C-jS-WOj" id="yjy-B6-tdT"/>
                         <outlet property="textField1" destination="aFt-QM-uhj" id="XQy-Im-CK2"/>
                     </connections>
                 </viewController>
@@ -58,6 +69,9 @@
             <point key="canvasLocation" x="200" y="163"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="qr_ico" width="128" height="128"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

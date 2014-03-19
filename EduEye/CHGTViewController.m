@@ -27,9 +27,10 @@
 @synthesize readQRBtn;
 @synthesize exitScan;
 
+//This method makes sure that scan stops!
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
     }
     return self;
@@ -79,20 +80,20 @@
 //Handle situations where camera is not available
 - (void) setupNoCameraView;
 {
-    UILabel *labelNoCam = [[UILabel alloc] init];
-    labelNoCam.text = @"No Camera available";
-    labelNoCam.textColor = [UIColor blackColor];
-    [self.view addSubview:labelNoCam];
-    [labelNoCam sizeToFit];
-    labelNoCam.center = self.view.center;
+    UIAlertView *message = [[UIAlertView alloc]initWithTitle:@"Could not open any camera." message:@"Try restarting EduEye" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [message show];
+    
+    [self stopServer];
+    [self stopImageStreaming];
+    self.readQRBtn.enabled = NO;
 }
-
 
 - (BOOL)shouldAutorotate;
 {
     return [[UIDevice currentDevice] orientation];
 }
 
+//Rotates both scan preview and image feed preview (same object)
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation;
 {
     if([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
@@ -114,9 +115,7 @@
         con.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
     }
     
-    self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
+    self.preview.frame = self.view.bounds;
 }
 
 
@@ -177,7 +176,6 @@
         // Handle the error appropriately.
     }
 
-    
     self.session = [[AVCaptureSession alloc] init];
     
     self.output = [[AVCaptureMetadataOutput alloc] init];
@@ -212,6 +210,8 @@
     
     self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self.view.layer insertSublayer:self.preview atIndex:0];
+    self.preview.frame = self.view.bounds;
+
 }
 
 -(IBAction)scanQRCode
@@ -350,10 +350,11 @@
 -(void)setupImageStreaming
 {
     NSLog(@"Starting image streaming");
+    NSError *error = [[NSError alloc] init];
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:nil];
+    self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
     if (!self.input) {
-        // Handle the error appropriately.
+        NSLog(@"No input");
     }
 
     self.session = [[AVCaptureSession alloc] init];
@@ -406,7 +407,8 @@
     self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 
     [self.view.layer insertSublayer:self.preview atIndex:0];
-    
+    self.preview.frame = self.view.bounds;
+
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
@@ -447,5 +449,6 @@
     [self.session startRunning];
     self.readQRBtn.hidden = NO;
     self.textField1.hidden = NO;
+    self.exitScan.hidden = YES;
 }
 @end
