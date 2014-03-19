@@ -24,6 +24,8 @@
 
 @implementation CHGTViewController
 @synthesize textField1;
+@synthesize readQRBtn;
+@synthesize exitScan;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,6 +61,7 @@
     
     //Start http-server
     [self startServer];
+    [self setupImageStreaming];
     [self startImageStreaming];
 
 }
@@ -152,7 +155,9 @@
 - (void)startScanning;
 {
     [self.session startRunning];
-    
+    self.textField1.hidden = YES;
+    self.readQRBtn.hidden = YES;
+
 }
 
 //Stops scanning and image feeding
@@ -164,6 +169,7 @@
 
 - (void) setupScanner;
 {
+    NSLog(@"Start QR-Code scanner");
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     
     self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:nil];
@@ -183,9 +189,6 @@
     
     self.preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
-    //AVCaptureConnection *con = self.preview.connection;
     
     //initiate camera in correct position
     if([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
@@ -206,8 +209,8 @@
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
     }
-    //con.videoOrientation = AVCaptureVideoOrientationPortrait;
     
+    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self.view.layer insertSublayer:self.preview atIndex:0];
 }
 
@@ -220,6 +223,17 @@
     
     //Start scanner view (image feed uses the same method)
     [self startScanning];
+    
+    self.exitScan.hidden = NO;
+
+}
+
+-(IBAction) exitQRCode
+{
+    self.exitScan.hidden = YES;
+    [self stopScanning];
+    [self setupImageStreaming];
+    [self startImageStreaming];
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
@@ -239,7 +253,9 @@
             self.textField1.text = outputStr;
             //Stop QR-code scanning
             [self stopScanning];
-            //Start imagefeed
+            //Setup image feed
+            [self setupImageStreaming];
+            //Start image feed
             [self startImageStreaming];
             
             //}
@@ -331,7 +347,7 @@
 
 
 //Image streaming
--(void)startImageStreaming
+-(void)setupImageStreaming
 {
     NSLog(@"Starting image streaming");
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -363,14 +379,10 @@
     //Should use something like this instead:
     //[self.device setActiveVideoMinFrameDuration: CMTimeMake(1, 15)];
 
-    NSLog(@"Set sampleBufferDeleage");
     [self.videoOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-    NSLog(@"Set preview");
     
     self.preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    
     
     //initiate camera in correct position
     if([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
@@ -391,11 +403,10 @@
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
     }
-    
+    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+
     [self.view.layer insertSublayer:self.preview atIndex:0];
     
-    [self startScanning];
-
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
@@ -427,7 +438,14 @@
 
 -(void) stopImageStreaming
 {
-    [self stopScanning];
+    [self.session stopRunning];
+    [self.preview removeFromSuperlayer];
 }
 
+-(void)startImageStreaming
+{
+    [self.session startRunning];
+    self.readQRBtn.hidden = NO;
+    self.textField1.hidden = NO;
+}
 @end
