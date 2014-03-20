@@ -60,9 +60,11 @@
         [self connectToWifi];
     }
     
+    NSLog(@"viewDidLoad speaking");
+    NSLog(@"viewLoad Orientation: %d", [[UIDevice currentDevice] orientation]);
+
     //Start http-server
     [self startServer];
-    [self setupImageStreaming];
     [self startImageStreaming];
 
 }
@@ -90,7 +92,8 @@
 
 - (BOOL)shouldAutorotate;
 {
-    return [[UIDevice currentDevice] orientation];
+    return YES;
+    // return [[UIDevice currentDevice] orientation];
 }
 
 //Rotates both scan preview and image feed preview (same object)
@@ -188,6 +191,7 @@
     self.preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
+    NSLog(@"Orientation: %d", [[UIDevice currentDevice] orientation]);
     //initiate camera in correct position
     if([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
         AVCaptureConnection *con = self.preview.connection;
@@ -208,10 +212,12 @@
         con.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
     }
     
-    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    //self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self.view.layer insertSublayer:self.preview atIndex:0];
     self.preview.frame = self.view.bounds;
 
+
+    
 }
 
 -(IBAction)scanQRCode
@@ -232,7 +238,6 @@
 {
     self.exitScan.hidden = YES;
     [self stopScanning];
-    [self setupImageStreaming];
     [self startImageStreaming];
 }
 
@@ -253,8 +258,6 @@
             self.textField1.text = outputStr;
             //Stop QR-code scanning
             [self stopScanning];
-            //Setup image feed
-            [self setupImageStreaming];
             //Start image feed
             [self startImageStreaming];
             
@@ -283,7 +286,6 @@
     
     NSLog(@"Set WWW port to %i", WWWPORT);
     [self.httpServer setPort:WWWPORT];
-
     [self.httpServer setDefaultHeader:@"Server" value:@"EduEye/1.0"];
     
     NSError *error = nil;
@@ -384,18 +386,19 @@
     
     self.preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
-    
-    //initiate camera in correct position
-    if([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
+
+    NSLog(@"Orientation: %d", [[UIDevice currentDevice] orientation]);
+    NSLog(@"self.oriantation: %d", self.interfaceOrientation);
+    if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft) {
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
     }
     
-    else if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait) {
+    else if (self.interfaceOrientation  == UIDeviceOrientationPortrait) {
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationPortrait;
     }
-    else if([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown) {
+    else if(self.interfaceOrientation == UIDeviceOrientationPortraitUpsideDown) {
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationPortraitUpsideDown;
     }
@@ -404,11 +407,9 @@
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationLandscapeLeft;
     }
-    self.preview.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-
+    
     [self.view.layer insertSublayer:self.preview atIndex:0];
     self.preview.frame = self.view.bounds;
-
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
@@ -446,7 +447,10 @@
 
 -(void)startImageStreaming
 {
+    [self setupImageStreaming];
+    
     [self.session startRunning];
+    
     self.readQRBtn.hidden = NO;
     self.textField1.hidden = NO;
     self.exitScan.hidden = YES;
