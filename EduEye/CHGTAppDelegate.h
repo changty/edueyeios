@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CHGTViewController.h"
 
 @interface CHGTAppDelegate : UIResponder <UIApplicationDelegate>
 
