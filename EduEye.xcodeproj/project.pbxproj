@@ -47,6 +47,7 @@
 		7395830918D9A441008BA443 /* RouteResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395830118D9A441008BA443 /* RouteResponse.m */; };
 		7395830A18D9A441008BA443 /* RoutingConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395830318D9A441008BA443 /* RoutingConnection.m */; };
 		7395830B18D9A441008BA443 /* RoutingHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7395830518D9A441008BA443 /* RoutingHTTPServer.m */; };
+		73AA14BC18DDD98F00F5F319 /* CapturedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73AA14BB18DDD98F00F5F319 /* CapturedImageManager.m */; };
 		73D1EBC218D5AB5A0009B340 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D1EBC118D5AB5A0009B340 /* Foundation.framework */; };
 		73D1EBC418D5AB5A0009B340 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D1EBC318D5AB5A0009B340 /* CoreGraphics.framework */; };
 		73D1EBC618D5AB5A0009B340 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73D1EBC518D5AB5A0009B340 /* UIKit.framework */; };
@@ -151,6 +152,8 @@
 		7395830318D9A441008BA443 /* RoutingConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingConnection.m; sourceTree = "<group>"; };
 		7395830418D9A441008BA443 /* RoutingHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoutingHTTPServer.h; sourceTree = "<group>"; };
 		7395830518D9A441008BA443 /* RoutingHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoutingHTTPServer.m; sourceTree = "<group>"; };
+		73AA14BA18DDD98F00F5F319 /* CapturedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CapturedImageManager.h; sourceTree = "<group>"; };
+		73AA14BB18DDD98F00F5F319 /* CapturedImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CapturedImageManager.m; sourceTree = "<group>"; };
 		73D1EBBE18D5AB5A0009B340 /* EduEye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EduEye.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D1EBC118D5AB5A0009B340 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		73D1EBC318D5AB5A0009B340 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -416,6 +419,8 @@
 				73D1EBD618D5AB5A0009B340 /* Main_iPad.storyboard */,
 				73D1EBD918D5AB5A0009B340 /* CHGTViewController.h */,
 				73D1EBDA18D5AB5A0009B340 /* CHGTViewController.m */,
+				73AA14BA18DDD98F00F5F319 /* CapturedImageManager.h */,
+				73AA14BB18DDD98F00F5F319 /* CapturedImageManager.m */,
 				73957F0E18D9866E008BA443 /* UDP */,
 				73957F0F18D9867B008BA443 /* Constants */,
 				73957F1018D98684008BA443 /* Reachability */,
@@ -581,6 +586,7 @@
 				7395826018D995D4008BA443 /* DDRange.m in Sources */,
 				73D1EBCE18D5AB5A0009B340 /* main.m in Sources */,
 				7395830718D9A441008BA443 /* Route.m in Sources */,
+				73AA14BC18DDD98F00F5F319 /* CapturedImageManager.m in Sources */,
 				7395826C18D995D4008BA443 /* HTTPFileResponse.m in Sources */,
 				7395826118D995D4008BA443 /* HTTPAuthenticationRequest.m in Sources */,
 				7395826518D995D4008BA443 /* MultipartFormDataParser.m in Sources */,

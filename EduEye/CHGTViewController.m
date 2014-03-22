@@ -9,6 +9,7 @@
 #import "CHGTViewController.h"
 #import "Reachability.h"
 #import "CHGTConstants.h"
+#import "CapturedImageManager.h"
 
 @interface CHGTViewController ()
 
@@ -17,9 +18,13 @@
 @property (strong, nonatomic) AVCaptureMetadataOutput* output;
 @property (strong, nonatomic) AVCaptureVideoDataOutput* videoOutput;
 
-@property (strong, nonatomic) AVCaptureSession* session;
-@property (strong, nonatomic) AVCaptureVideoPreviewLayer* preview;
-@property (strong, nonatomic) UIImage* capturedImage;
+@property (strong, nonatomic) AVCaptureSession *session;
+@property (strong, nonatomic) AVCaptureVideoPreviewLayer *preview;
+@property (strong, nonatomic) UIImage *capturedImage;
+
+@property (strong, nonatomic) RoutingHTTPServer *httpServer;
+
+
 @end
 
 @implementation CHGTViewController
@@ -39,6 +44,8 @@
 - (void) viewDidAppear:(BOOL)animated;
 {
     [super viewDidAppear:animated];
+    [self startImageStreaming];
+
 }
 
 
@@ -59,13 +66,8 @@
     if (![self isConnected]) {
         [self connectToWifi];
     }
-    
-    NSLog(@"viewDidLoad speaking");
-    NSLog(@"viewLoad Orientation: %d", [[UIDevice currentDevice] orientation]);
-
     //Start http-server
     [self startServer];
-    [self startImageStreaming];
 
 }
 
@@ -249,6 +251,7 @@
                 NSString *scannedValue = [((AVMetadataMachineReadableCodeObject *) current) stringValue];
                 NSLog(@"Scanned value: %@", scannedValue);
                 [self.delegate scanViewController:self didSuccessfullyScan:scannedValue];
+            
             //set text to textfield
             NSString *outputStr =  [NSString stringWithFormat:@"Connected to: %@", scannedValue];
             
@@ -334,10 +337,19 @@
 
     //stream/live.jpg
     [self.httpServer get:@"/stream/live.jpg*" withBlock:^(RouteRequest *request, RouteResponse *response) {
-        NSLog(@"Responding with image....");
-        [response setHeader:@"Content-Type" value:@"image/jpeg"];
-        NSData *imageData = UIImageJPEGRepresentation(self.capturedImage, 0.3);
-        [response respondWithData:imageData];
+        
+        NSData *imageData = [self getJPGPicture];
+        
+        if(imageData.length > 0) {
+            
+            [response setHeader:@"Content-Type" value:@"image/jpeg"];
+            [response respondWithData:imageData];
+        }
+        else {
+            [response setStatusCode:400];
+            [response setHeader:@"Content-Type" value:@"text/plain"];
+            [response respondWithString:@"FAIL"];
+        }
     }];
 
 }
@@ -351,9 +363,10 @@
 //Image streaming
 -(void)setupImageStreaming
 {
-    NSLog(@"Starting image streaming");
+    //NSLog(@"Starting image streaming");
     NSError *error = [[NSError alloc] init];
     self.device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
     self.input = [AVCaptureDeviceInput deviceInputWithDevice:self.device error:&error];
     if (!self.input) {
         NSLog(@"No input");
@@ -370,6 +383,11 @@
         NSLog(@"Error setting resolution");
     }
     
+    //Set min frames
+    if ( YES == [self.device lockForConfiguration:NULL] )
+    {
+        [self.device setActiveVideoMinFrameDuration: CMTimeMake(1, 15)];
+    }
     
     self.videoOutput = [[AVCaptureVideoDataOutput alloc] init];
     [self.session addOutput:self.videoOutput];
@@ -377,18 +395,13 @@
 
     //Output settings
     self.videoOutput.videoSettings = @{ (NSString *)kCVPixelBufferPixelFormatTypeKey : @(kCVPixelFormatType_32BGRA) };
-    self.videoOutput.minFrameDuration = CMTimeMake(1, 15);
+    //self.videoOutput.minFrameDuration = CMTimeMake(1, 15);
     
-    //Should use something like this instead:
-    //[self.device setActiveVideoMinFrameDuration: CMTimeMake(1, 15)];
-
     [self.videoOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
     
     self.preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
 
-    NSLog(@"Orientation: %d", [[UIDevice currentDevice] orientation]);
-    NSLog(@"self.oriantation: %d", self.interfaceOrientation);
     if(self.interfaceOrientation == UIDeviceOrientationLandscapeLeft) {
         AVCaptureConnection *con = self.preview.connection;
         con.videoOrientation = AVCaptureVideoOrientationLandscapeRight;
@@ -413,13 +426,11 @@
 }
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    
     [self imageFromSampleBuffer: sampleBuffer];
     
 }
 
 - (void)imageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer {
-    
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
     CVPixelBufferLockBaseAddress(imageBuffer, 0);
     void *baseAddress = CVPixelBufferGetBaseAddress(imageBuffer);
@@ -435,14 +446,21 @@
     UIImage *image = [UIImage imageWithCGImage:quartzImage];
     CGImageRelease(quartzImage);
     
-    self.capturedImage = image;
-    
+    CapturedImageManager *sharedManager = [CapturedImageManager sharedManager];
+    sharedManager.capturedImage = image;
 }
 
 -(void) stopImageStreaming
 {
     [self.session stopRunning];
     [self.preview removeFromSuperlayer];
+}
+
+-(NSData*) getJPGPicture
+{
+    CapturedImageManager *sharedManager = [CapturedImageManager sharedManager];
+    NSData *imageData = UIImageJPEGRepresentation(sharedManager.capturedImage, 0.3);
+    return imageData;
 }
 
 -(void)startImageStreaming

@@ -21,13 +21,13 @@
 @interface CHGTViewController : UIViewController <AVCaptureMetadataOutputObjectsDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic, weak) id<CHGTViewControllerDelegate> delegate;
-@property (strong, nonatomic) RoutingHTTPServer *httpServer;
 
 @property (weak, nonatomic) IBOutlet UILabel *textField1;
 
 @property (weak, nonatomic) IBOutlet UIButton *readQRBtn;
 
 @property (weak, nonatomic) IBOutlet UIButton *exitScan;
+
 
 //QR-Code scanning
 -(IBAction)scanQRCode;
@@ -53,6 +53,7 @@
 -(void) startImageStreaming;
 -(void) stopImageStreaming;
 -(void)imageFromSampleBuffer:(CMSampleBufferRef)sampleBuffer;
+-(NSData*) getJPGPicture;
 
 @end
 
