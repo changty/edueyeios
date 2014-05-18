@@ -36,6 +36,7 @@
 -(void) startScanning;
 -(void) stopScanning;
 -(void) setTextToLabel:(NSString *) text;
+-(IBAction) showHelp;
 
 //Wifi connection
 -(IBAction)connectToWifi;

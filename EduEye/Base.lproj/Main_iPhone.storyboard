@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -7,17 +7,17 @@
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="CHGTViewController" sceneMemberID="viewController">
+                <viewController modalTransitionStyle="flipHorizontal" id="vXZ-lx-hvc" customClass="CHGTViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <view key="view" contentMode="center" id="kh9-bI-dsS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s7C-jS-WOj">
-                                <rect key="frame" x="34" y="220" width="253" height="128"/>
+                                <rect key="frame" x="34" y="176" width="253" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="qr_ico">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -27,16 +27,16 @@
                                     <action selector="scanQRCode" destination="vXZ-lx-hvc" eventType="touchUpInside" id="WkL-E3-ZD8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Scan QR-code to connect to PC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFt-QM-uhj">
-                                <rect key="frame" x="20" y="184" width="281" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Scan QR-code to connect to PC" textAlignment="center" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFt-QM-uhj">
+                                <rect key="frame" x="14" y="118" width="281" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUh-6b-7Mh">
-                                <rect key="frame" x="137" y="478" width="35" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cUh-6b-7Mh">
+                                <rect key="frame" x="143" y="383" width="35" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Back">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,18 +46,34 @@
                                     <action selector="exitQRCode" destination="vXZ-lx-hvc" eventType="touchUpInside" id="yTa-dR-TYQ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOr-fx-I90">
+                                <rect key="frame" x="128" y="421" width="52" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Help"/>
+                                <connections>
+                                    <action selector="showHelp" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Cwr-7L-b0E"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.12887525050000001" green="0.19761973159999999" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="FOr-fx-I90" secondAttribute="centerX" id="0KM-yO-lJ0"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="cUh-6b-7Mh" secondAttribute="bottom" constant="60" id="0js-OV-X7D"/>
                             <constraint firstItem="s7C-jS-WOj" firstAttribute="top" secondItem="aFt-QM-uhj" secondAttribute="bottom" constant="15" id="46s-SA-wUd"/>
+                            <constraint firstItem="s7C-jS-WOj" firstAttribute="centerX" secondItem="cUh-6b-7Mh" secondAttribute="centerX" id="M2o-HE-il9"/>
+                            <constraint firstItem="aFt-QM-uhj" firstAttribute="width" secondItem="s7C-jS-WOj" secondAttribute="width" id="WLk-6p-DxU"/>
                             <constraint firstItem="cUh-6b-7Mh" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="137" id="ZiM-zL-Qgq"/>
                             <constraint firstItem="s7C-jS-WOj" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="ar3-zO-DR6"/>
                             <constraint firstItem="aFt-QM-uhj" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="i9E-3B-zvj"/>
+                            <constraint firstItem="aFt-QM-uhj" firstAttribute="width" secondItem="cUh-6b-7Mh" secondAttribute="width" id="ol8-qs-6Yv"/>
+                            <constraint firstItem="s7C-jS-WOj" firstAttribute="centerX" secondItem="aFt-QM-uhj" secondAttribute="centerX" id="pTg-rm-GPB"/>
                             <constraint firstItem="s7C-jS-WOj" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="phb-Gx-c7v"/>
                             <constraint firstItem="aFt-QM-uhj" firstAttribute="centerX" secondItem="s7C-jS-WOj" secondAttribute="centerX" id="zTj-bd-5ab"/>
+                            <constraint firstItem="s7C-jS-WOj" firstAttribute="leading" secondItem="aFt-QM-uhj" secondAttribute="trailing" constant="-261" id="zXY-Mw-o0b"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="exitScan" destination="cUh-6b-7Mh" id="YrD-nV-dtO"/>
                         <outlet property="readQRBtn" destination="s7C-jS-WOj" id="yjy-B6-tdT"/>

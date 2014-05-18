@@ -53,7 +53,7 @@
 {
     [super viewWillAppear:animated];
     if(![self isCameraAvailable]) {
-        [self setupNoCameraView];
+       [self setupNoCameraView];
     }
 }
 
@@ -67,7 +67,7 @@
         [self connectToWifi];
     }
     //Start http-server
-    [self startServer];
+   [self startServer];
 
 }
 
@@ -127,7 +127,7 @@
 // Return true/false whether wlan is enabled or not.
 -(BOOL)isConnected
 {
-    NSLog(@"Connection status: %d",[[Reachability reachabilityForLocalWiFi] currentReachabilityStatus]);
+    NSLog(@"Connection status: %ld",[[Reachability reachabilityForLocalWiFi] currentReachabilityStatus]);
 
     if ([[Reachability reachabilityForLocalWiFi] currentReachabilityStatus] != ReachableViaWiFi) {
         NSLog(@"Not connected");
@@ -193,7 +193,7 @@
     self.preview = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
     self.preview.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
-    NSLog(@"Orientation: %d", [[UIDevice currentDevice] orientation]);
+    NSLog(@"Orientation: %ld", [[UIDevice currentDevice] orientation]);
     //initiate camera in correct position
     if([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft) {
         AVCaptureConnection *con = self.preview.connection;
@@ -473,4 +473,16 @@
     self.textField1.hidden = NO;
     self.exitScan.hidden = YES;
 }
+
+//Show and hide help view
+-(IBAction)showHelp
+{
+
+    UIAlertView *helpMessage = [[UIAlertView alloc]initWithTitle:@"Help!" message:@"1. Download EduEye desktop app from www.edueye.net \n 2. Make sure both devices are on same network (WiFi) \n 3. Launch EduEye desktop app and scan the QR-code with EduEye mobile app." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    
+    [helpMessage show];
+    
+    
+}
+
 @end
